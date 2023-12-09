@@ -65,6 +65,7 @@ public class BallController : MonoBehaviour
             gameManager.ScoreEnemy();
             startingVelocity = -startingVelocity;
             ResetBall();
+            
         }
 
     }

@@ -4,20 +4,34 @@ using UnityEngine;
 
 public class EnemyPaddleController : MonoBehaviour
 {
-    private Rigidbody2D rb;
-    public float speed = 3f;
-
+    public GameManager gameManager;
+    public float speed = 10f;
     public Vector2 limits = new Vector2(-4.5f, 4.5f);
 
+    private Rigidbody2D rb;
     private GameObject ball;
+
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         ball = GameObject.Find("Ball"); //Encontra o objeto da bola na cena
     }
-
+    
     private void Update()
+    {
+        if (gameManager.gameMode == "Single Player")
+        {
+            CaptureMovimentIA();
+        }
+        else
+        {
+            CaptureMovimentPlayer2();
+        }
+      
+    }
+
+    public void CaptureMovimentIA()
     {
         if (ball != null)
         {
@@ -27,5 +41,21 @@ public class EnemyPaddleController : MonoBehaviour
             // Move gradualmente para a posição Y da bola
             transform.position = Vector2.MoveTowards(transform.position, targetPosition, Time.deltaTime * speed);
         }
+    }
+
+    public void CaptureMovimentPlayer2()
+    {
+        // Captura da entrada vertical (seta para cima, seta para baixo que estão configuradas no AXES do projeto Unity)
+        float moveInput = Input.GetAxis("Vertical Player 2");
+
+        // Caulcula a nova posição da raquete baseada na entrada e na velocidade
+        Vector3 newPosition = transform.position + Vector3.up * moveInput * speed * Time.deltaTime;
+
+        // Limita a posição vertical da raquete para que ela não saia da tela
+        newPosition.y = Mathf.Clamp(newPosition.y, limits.x, limits.y);
+
+        // Atualiza a posição da raquete
+
+        transform.position = newPosition;
     }
 }

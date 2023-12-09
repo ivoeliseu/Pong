@@ -4,22 +4,26 @@ using UnityEngine;
 
 public class PlayerPaddleController : MonoBehaviour
 {
-    public float speed = 5f;
-
+    public float speed = 10f;
+    public Vector2 limits = new Vector2(-4.5f, 4.5f);
     public void Update()
     {
-        // Captura da entrada vertical (seta para cima, seta para baixo, teclas W e S)
-        float moveInput = Input.GetAxis("Vertical");
+        CaptureMoviment();
+    }
+
+    public void CaptureMoviment()
+    {
+        // Captura da entrada vertical (seta para cima, seta para baixo que estão configuradas no AXES do projeto Unity)
+        float moveInput = Input.GetAxis("Vertical Player 1");
 
         // Caulcula a nova posição da raquete baseada na entrada e na velocidade
         Vector3 newPosition = transform.position + Vector3.up * moveInput * speed * Time.deltaTime;
 
         // Limita a posição vertical da raquete para que ela não saia da tela
-        newPosition.y = Mathf.Clamp(newPosition.y, -4.5f, 4.5f);
+        newPosition.y = Mathf.Clamp(newPosition.y, limits.x, limits.y);
 
         // Atualiza a posição da raquete
-
-        transform.position = newPosition;    
+        transform.position = newPosition;
     }
 
 }

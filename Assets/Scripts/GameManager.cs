@@ -9,9 +9,8 @@ public class GameManager : MonoBehaviour
     // No script GameManager
     public Transform playerPaddle;
     public Transform enemyPaddle;
-
     public BallController ballController;
-
+    public GameObject gameModeScreen;
     public GameObject endGameScreen;
 
     public int playerScore = 0;
@@ -19,20 +18,36 @@ public class GameManager : MonoBehaviour
     public int winPoints = 2;
     public float resetTimer = 5f;
     public bool endGame = false;
+    public string gameMode;
 
     public TextMeshProUGUI textPointsPlayer;
     public TextMeshProUGUI textPointsEnemy;
     public TextMeshProUGUI textWinner;
-    
 
-    // ...
     void Start()
     {
+        SelectGameMode();
+    }
+
+    public void SelectGameMode()
+    {
+        gameModeScreen.SetActive(true);
+    }
+
+    public void SinglePlayerMode()
+    {
+        gameMode = "Single Player";
         ResetGame();
     }
-    
+    public void MultiplayerMode()
+    {
+        gameMode = "Multiplayer";
+        ResetGame();
+    }
+
     public void ResetGame()
     {
+        gameModeScreen.SetActive(false);
         endGameScreen.SetActive(false);
         endGame = false;
         // Define as posições iniciais das raquetes
@@ -73,15 +88,31 @@ public class GameManager : MonoBehaviour
     }
     public void EndGame()
     {
-        endGame = true;
-        if (playerScore > enemyScore)
+        if (gameMode == "Single Player")
         {
-            textWinner.text = "Player Winner!";
+            endGame = true;
+            if (playerScore > enemyScore)
+            {
+                textWinner.text = "Player Wins!";
+            }
+            else
+            {
+                textWinner.text = "CPU Wins!";
+            }
         }
         else
         {
-            textWinner.text = "Enemy Winner!";
+            endGame = true;
+            if (playerScore > enemyScore)
+            {
+                textWinner.text = "Player 1 Wins!";
+            }
+            else
+            {
+                textWinner.text = "Player 2 Wins!";
+            }
         }
+
         endGameScreen.SetActive(true);
     }
     private void LoadMenu()

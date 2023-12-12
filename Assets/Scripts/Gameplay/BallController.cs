@@ -50,7 +50,7 @@ public class BallController : MonoBehaviour
         if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Enemy"))
         {
             rb.velocity = new Vector2(-rb.velocity.x, rb.velocity.y);
-            rb.velocity *= speedUp;
+            rb.velocity *= speedUp;    
         }
 
         if (collision.gameObject.CompareTag("PointPlayer"))

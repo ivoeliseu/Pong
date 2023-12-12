@@ -8,12 +8,21 @@ public class EnemyPaddleController : MonoBehaviour
     public float speed = 10f;
     public Vector2 limits = new Vector2(-4.5f, 4.5f);
 
+    public bool isPlayer = false;
+    public SpriteRenderer spriteRenderer;
+    public string movementeAxisName = "Vertical Player 2";
+
     private Rigidbody2D rb;
     private GameObject ball;
 
 
     private void Start()
     {
+        if (isPlayer)
+            spriteRenderer.color = SaveController.Instance.colorPlayer;
+        else
+            spriteRenderer.color = SaveController.Instance.colorEnemy;
+
         rb = GetComponent<Rigidbody2D>();
         ball = GameObject.Find("Ball"); //Encontra o objeto da bola na cena
     }
@@ -46,7 +55,7 @@ public class EnemyPaddleController : MonoBehaviour
     public void CaptureMovimentPlayer2()
     {
         // Captura da entrada vertical (seta para cima, seta para baixo que estão configuradas no AXES do projeto Unity)
-        float moveInput = Input.GetAxis("Vertical Player 2");
+        float moveInput = Input.GetAxis(movementeAxisName);
 
         // Caulcula a nova posição da raquete baseada na entrada e na velocidade
         Vector3 newPosition = transform.position + Vector3.up * moveInput * speed * Time.deltaTime;

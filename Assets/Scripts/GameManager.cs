@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     public int playerScore = 0;
     public int enemyScore = 0;
     public int winPoints = 2;
-    public float resetTimer = 5f;
+    public float timeToStartGame = 3f;
     public bool endGame = false;
     public string gameMode;
 
@@ -56,7 +56,8 @@ public class GameManager : MonoBehaviour
         // ...
 
         //Insetir dentro do ResetGame
-        ballController.ResetBall();
+        
+        ballController.ResetBall(); 
 
         playerScore = 0;
         enemyScore = 0;

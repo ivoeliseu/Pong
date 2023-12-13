@@ -89,31 +89,27 @@ public class GameManager : MonoBehaviour
     }
     public void EndGame()
     {
+        endGame = true;
+        string winner;
         if (gameMode == "Single Player")
         {
-            endGame = true;
+            
             if (playerScore > enemyScore)
             {
-                textWinner.text = "Player Wins!";
+                winner = SaveController.Instance.namePlayer;                
             }
             else
             {
-                textWinner.text = "CPU Wins!";
+                winner = "CPU";
             }
         }
         else
         {
-            endGame = true;
-            if (playerScore > enemyScore)
-            {
-                textWinner.text = "Player 1 Wins!";
-            }
-            else
-            {
-                textWinner.text = "Player 2 Wins!";
-            }
+            winner = SaveController.Instance.GetName(playerScore > enemyScore);            
         }
 
+        textWinner.text = winner + " Wins!";
+        SaveController.Instance.SaveWinner(winner);
         endGameScreen.SetActive(true);
     }
     private void LoadMenu()
